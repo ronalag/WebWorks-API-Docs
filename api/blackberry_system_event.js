@@ -109,19 +109,19 @@
  * &lt;script type="text/javascript"&gt;
  * $("#setCoverageChange").click(function() {
  *   var callback = coverageChanged;
- *   poll("onCoverageChange", { "callback" : callback.name }, getCallback(callback));
+ *   poll("onCoverageChange", { "monitor" : true }, getCallback(callback));
  * });
  * $("#unsetCoverageChange").click(function(){
  *   var callback = null;
- *   poll("onCoverageChange", { "callback" : callback }, getCallback(callback));
+ *   poll("onCoverageChange", { "monitor" : false }, getCallback(callback));
  * });
  * $("#setVolumeUp").click(function() {
  *   var callback = volumeUpKeyPressed;
- *   poll("onHardwareKey", { "key" : blackberry.system.event.KEY_VOLUMEUP, "callback" : callback.name }, getCallback(callback));
+ *   poll("onHardwareKey", { "key" : blackberry.system.event.KEY_VOLUMEUP, "monitor" : true }, getCallback(callback));
  * });
  * $("#unsetVolumeUp").click(function(){
  *   var callback = null;
- *   poll("onHardwareKey", { "key" : blackberry.system.event.KEY_VOLUMEUP, "callback" : callback }, getCallback(callback));
+ *   poll("onHardwareKey", { "key" : blackberry.system.event.KEY_VOLUMEUP, "monitor" : false }, getCallback(callback));
  * });
  * &lt;/script&gt;
  * &lt;/body&gt;
@@ -203,12 +203,12 @@ blackberry.system.event.KEY_VOLUMEUP = 7;
 * @name blackberry.system.event.onHardwareKey
 * @description Get notification when one of the hardware buttons on the device is clicked.<br><br>HTTP response will be returned when there the specified key is clicked. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further clicks to the key.
 * @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
-* @param {String} callback Name of the callback function or "null" to stop getting notification for clicks to the key
+* @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for clicks to the hardware buttons or not. Pass true to start monitoring, or false to stop monitoring.
 * @returns {Object Literal}
 * {
 *   "data" : {
 *     "key" : "&lt;key that was passed&gt;",
-*     "callback" : "&lt;callback that was passed&gt;"
+*     "monitor" : "&lt;the flag that was passed&gt;"
 *   }
 * }
 * @BB50+
@@ -225,11 +225,11 @@ blackberry.system.event.onHardwareKey = function(key,onSystemEvent) { };
 /**
 * @name blackberry.system.event.onCoverageChange
 * @description Get notification whenever the coverage status changes.<br><br>HTTP response will be returned when there is a coverage change. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further coverage changes.
-* @param {String} callback Name of the callback function or "null" to stop getting notification for coverage changes
+* @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for coverage status changes or not. Pass true to start monitoring, or false to stop monitoring.
 * @returns {Object Literal}
 * {
 *   "data" : {
-*     "callback" : "&lt;callback that was passed&gt;"
+*     "monitor" : "&lt;the flag that was passed&gt;"
 *   }
 * }
 * @BB50+
