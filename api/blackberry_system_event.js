@@ -194,48 +194,52 @@ blackberry.system.event.KEY_VOLUMEDOWN = 6;
 blackberry.system.event.KEY_VOLUMEUP = 7;
 
 /**
-* Assigns a listener for the click of one of the hardware buttons on the device. 
-* @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
-* @callback {function} onSystemEvent Function to be called when the key is clicked - this function takes no parameters and no return value is required.  If you attempt to subscribe more than one callback function to a particular key, only the newest callback will be used when the key is pressed.  To remove the callback simply call the onHardwareKey with null as the callback parameter.
-* @BB50+
-*/
+ * @name blackberry.system.event.onHardwareKey^2
+ * @description Assigns a listener for the click of one of the hardware buttons on the device. 
+ * @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
+ * @callback {function} onSystemEvent Function to be called when the key is clicked - this function takes no parameters and no return value is required.  If you attempt to subscribe more than one callback function to a particular key, only the newest callback will be used when the key is pressed.  To remove the callback simply call the onHardwareKey with null as the callback parameter.
+ * @BB50+
+ * @function
+ */
 /**
-* @name blackberry.system.event.onHardwareKey
-* @description Get notification when one of the hardware buttons on the device is clicked.<br><br>HTTP response will be returned when there the specified key is clicked. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further clicks to the key.
-* @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
-* @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for clicks to the hardware buttons or not. Pass true to start monitoring, or false to stop monitoring.
-* @returns {Object Literal}
-* {
-*   "data" : {
-*     "key" : "&lt;key that was passed&gt;",
-*     "monitor" : "&lt;the flag that was passed&gt;"
-*   }
-* }
-* @BB50+
-* @uri
-* @function
-*/
+ * @name blackberry.system.event.onHardwareKey
+ * @description Get notification when one of the hardware buttons on the device is clicked.<br><br>HTTP response will be returned when there the specified key is clicked. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further clicks to the key.
+ * @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
+ * @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for clicks to the hardware buttons or not. Pass true to start monitoring, or false to stop monitoring.
+ * @returns {Object Literal}
+ * {
+ *   "data" : {
+ *     "key" : "&lt;key that was passed&gt;",
+ *     "monitor" : "&lt;the flag that was passed&gt;"
+ *   }
+ * }
+ * @BB50+
+ * @uri
+ * @function
+ */
 blackberry.system.event.onHardwareKey = function(key,onSystemEvent) { };
 
 /**
-* Assigns a listener for when the coverage status changes. 
-* @callback {function} onSystemEvent Function to be called when coverage changes.  Only one function can be assigned to this event. To unregister the callback, call the onCoverageChange method and pass in null for the callback parameter.
-* @BB50+
-*/
+ * @name blackberry.system.event.onCoverageChange^2
+ * @description Assigns a listener for when the coverage status changes. 
+ * @callback {function} onSystemEvent Function to be called when coverage changes.  Only one function can be assigned to this event. To unregister the callback, call the onCoverageChange method and pass in null for the callback parameter.
+ * @BB50+
+ * @function
+ */
 /**
-* @name blackberry.system.event.onCoverageChange
-* @description Get notification whenever the coverage status changes.<br><br>HTTP response will be returned when there is a coverage change. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further coverage changes.
-* @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for coverage status changes or not. Pass true to start monitoring, or false to stop monitoring.
-* @returns {Object Literal}
-* {
-*   "data" : {
-*     "monitor" : "&lt;the flag that was passed&gt;"
-*   }
-* }
-* @BB50+
-* @uri
-* @function
-*/
+ * @name blackberry.system.event.onCoverageChange
+ * @description Get notification whenever the coverage status changes.<br><br>HTTP response will be returned when there is a coverage change. When the response is received, it is the caller's responsibility to perform necessary actions (e.g. invoke a callback function). Once that is done, a new HTTP request should be issued again to listen to further coverage changes.
+ * @param {Boolean} monitor Flag to indicate whether the caller wants to get notifications for coverage status changes or not. Pass true to start monitoring, or false to stop monitoring.
+ * @returns {Object Literal}
+ * {
+ *   "data" : {
+ *     "monitor" : "&lt;the flag that was passed&gt;"
+ *   }
+ * }
+ * @BB50+
+ * @uri
+ * @function
+ */
 blackberry.system.event.onCoverageChange = function(onSystemEvent) { };
 
 /**
