@@ -37,6 +37,7 @@
 *   newTask.save(); 
 * &lt;&sol;script&gt;
 */
+
 blackberry.pim.Task = function() { };
 
 /**
@@ -104,29 +105,151 @@ blackberry.pim.Task.PRIORITY_NORMAL = 1;
 blackberry.pim.Task.PRIORITY_LOW = 2;
 
 /**
-* This method finds the tasks that match the regular expression provided. 
-* @param {blackberry.find.FilterExpression} [filter] Optional expression parameter that defines the search criteria for the find.  If no value is provided the method will return all the Tasks on the device.
+* @name blackberry.pim.Task.find^1
+* @function
+* @description This method finds the tasks that match the regular expression provided. 
+* @param {blackberry.find.FilterExpression} [filter] Optional expression parameter that defines the search criteria for the find.  If no value is provided the method will return all the Tasks on the device. 
 * @param {String} [orderBy] Optional &apos;orderBy&apos; parameter specifying the field which the results will be sorted by. If &apos;isAscending&apos; is not specified or &apos;isAscending&apos; is true, the sort results will be in an ascending order. If &apos;isAscending&apos; is false, the sort results will be in a descending order.
-* @param {Number} [maxReturn] Optional integer parameter specifying the maximum number of results to return from the find.  If not specified or set to -1, it will return all results found.
-* @param {Boolean} [isAscending] Optional &apos;isAscending&apos; parameter specifying whether the sort order is ascending or descending. If not specified or set to true, the results sorted by the field specified by &apos;orderBy&apos; will be in an ascending order. If set to false, the sort results will be in a descending order. If no &apos;orderBy&apos; value is specified, &apos;isAscending&apos; is neglected.
+* @param {Number} [maxReturn] Optional integer parameter specifying the maximum number of results to return from the find.  If not specified or set to -1, it will return all results found. 
+* @param {Boolean} [isAscending] Optional &apos;isAscending&apos; parameter specifying whether the sort order is ascending or descending. If not specified or set to true, the results sorted by the field specified by &apos;orderBy&apos; will be in an ascending order. If set to false, the sort results will be in a descending order. If no &apos;orderBy&apos; value is specified, &apos;isAscending&apos; is neglected. 
 * @returns {Task[]}
 * @BB50+
 */
+/**
+* @name blackberry.pim.Task.find
+* @function
+* @description This method finds the tasks that match the regular expression provided. 
+* @param {String} [filter] Optional expression parameter that defines the search criteria for the find.  If no value is provided the method will return all the Tasks on the device. (Must be stringified and put in the data of the xhr call)
+* @param {String} [orderBy] Optional &apos;orderBy&apos; parameter specifying the field which the results will be sorted by. If &apos;isAscending&apos; is not specified or &apos;isAscending&apos; is true, the sort results will be in an ascending order. If &apos;isAscending&apos; is false, the sort results will be in a descending order.(Must be put in the data of the xhr call)
+* @param {String} [maxReturn] Optional integer parameter specifying the maximum number of results to return from the find.  If not specified or set to -1, it will return all results found. (Must be put in the data of the xhr call)
+* @param {String} [isAscending] Optional &apos;isAscending&apos; parameter specifying whether the sort order is ascending or descending. If not specified or set to true, the results sorted by the field specified by &apos;orderBy&apos; will be in an ascending order. If set to false, the sort results will be in a descending order. If no &apos;orderBy&apos; value is specified, &apos;isAscending&apos; is neglected. (Must be put in the data of the xhr call)
+ * @returns {Object Literal}
+ * {
+ *   "data" : {
+ *     "filter" : "&lt;FilterExpression JSON that was passed&gt;",
+ *     "orderBy" : "&lt;field name that was passed&gt;",
+ *     "maxReturn" : &lt;maximum number of results that was passed&gt;,
+ *     "isAscending" : &lt;isAscending flag that was passed&gt;,
+ *     "items" : &lt;array of Task objects that satisfy the search criteria&gt;
+ *   }
+ * }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function findTask(){
+*              var filter = new blackberry.find.FilterExpression("summary", "==", "Get Groceries");
+*              var postdata = "filter=" + JSON.stringify(filter) + "&" + "isAscending=true";	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/pim/Task/find",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="findTask();" value="Find Task"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
 blackberry.pim.Task.find = function(filter,orderBy,maxReturn,isAscending) { };
 
+
 /**
-* This method will save the changes made to the Task object. 
+* @name blackberry.pim.Task.save
+* @function 
+* @description This method will save the changes made to the Task object. 
+* @param {String} task The specified javascript task object that needs to be saved. (Must be stringified and put in the data of the xhr call)
+* @returns {Object Literal}
+* {
+*   "data" : {
+*     "task" : "&lt;task JSON that was passed&gt;",
+*     "uid" : "&lt;uid that was passed&gt;"
+*   }
+* }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function saveTask(){
+*              var newTask = new blackberry.pim.Task(); 
+*                 newTask.summary = "Get Groceries"; 
+*                 newTask.note = "Pick up eggs, and Milk";  
+*                 newTask.priority = blackberry.pim.Task.PRIORITY_HIGH;  
+*              var postdata = "task=" + JSON.stringify(newTask); 	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/pim/Task/save",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="saveTask();" value="Save Task"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*
+*/
+blackberry.pim.Task.save = function() { };
+
+/**
+* @name blackberry.pim.Task.remove
+* @function 
+* @description This method will remove a Task from the PIM storage.
+* @param {String} uid The specified unique ID of the object that needs to be removed. (Must be put in the data of the xhr call)
+* @returns {Object Literal}
+* {
+*   "data" : {
+*     "uid" : "&lt;uid that was passed&gt;",
+*   }
+* }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function removeTask(){
+*              var tasklist = blackberry.pim.Task.find();    
+*              var postdata = "uid=" + tasklist[0].uid; 	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/pim/Task/remove",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="removeTask();" value="Remove Task"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
+blackberry.pim.Task.remove = function() { };
+
+/**
+* This method will save the changes made to the task object. 
 * @returns {void}
 * @BB50+
 */
 blackberry.pim.Task.prototype.save = function() { };
 
 /**
-* This method will remove a Task from the PIM storage. 
+* This method will remove a task from the PIM storage. 
 * @returns {void}
 * @BB50+
 */
 blackberry.pim.Task.prototype.remove = function() { };
+
 
 /**
 * Contains a brief description of the task. 

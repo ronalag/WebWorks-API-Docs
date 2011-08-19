@@ -27,14 +27,48 @@
 blackberry.pim.category = { };
 
 /**
-* Returns the categories defined for the PIM database. If there are no categories defined for the PIM database, then a zero length array is returned. 
+* @name blackberry.pim.category.getCategories^1
+* @function
+* @description Returns the categories defined for the PIM database. If there are no categories defined for the PIM database, then a zero length array is returned. 
 * @returns {String[]}
 * @BB50+
+*/
+/**
+* @name blackberry.pim.category.getCategories
+* @function
+* @description Returns the categories defined for the PIM database. If there are no categories defined for the PIM database, then a zero length array is returned. 
+* @returns {Object Literal}
+* {
+*   "data" : {
+*     "categories" : &lt;array of categories &gt;
+*   }
+* }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function getCategories(){	
+*              $.ajax({
+*                  type: "get",
+*                  url: "http://webworks/blackberry/pim/category/get",
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="getCategories();" value="get Categories"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
 */
 blackberry.pim.category.getCategories = function() { };
 
 /**
-* Adds the provided category to the PIM database. Category names are case sensitive. 
+* @name blackberry.pim.category.addCategory^1
+* @function
+* @description Adds the provided category to the PIM database. Category names are case sensitive. 
 * @param {String} categoryName String representing a category.
 * @returns {void}
 * @BB50+
@@ -45,13 +79,67 @@ blackberry.pim.category.getCategories = function() { };
 *   }
 * &lt;&sol;script&gt;
 */
+/**
+* @name blackberry.pim.category.addCategory
+* @function
+* @description Adds the provided category to the PIM database. Category names are case sensitive. 
+* @param {String} categoryName String representing a category.
+* @returns {void}
+* @BB50+
+* @uri 
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function addCategories(){	
+*              $.ajax({
+*                  type: "get",
+*                  url: "http://webworks/blackberry/pim/category/add?categoryName=category1",
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="addCategories();" value="add Categories"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
 blackberry.pim.category.addCategory = function(categoryName) { };
 
 /**
-* Deletes the indicated category from the PIM database. If the indicated category is not in the PIM database, this method is treated as successfully completing. Category names are case sensitive. 
+* @name blackberry.pim.category.deleteCategory^1
+* @function
+* @description Deletes the indicated category from the PIM database. If the indicated category is not in the PIM database, this method is treated as successfully completing. Category names are case sensitive. 
 * @param {String} categoryName String category.
 * @returns {void}
 * @BB50+
+*/
+/**
+* @name blackberry.pim.category.deleteCategory
+* @function
+* @description Deletes the provided category to the PIM database. Category names are case sensitive. 
+* @param {String} categoryName String category.
+* @returns {void}
+* @BB50+
+* @uri 
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function deleteCategories(){	
+*              $.ajax({
+*                  type: "get",
+*                  url: "http://webworks/blackberry/pim/category/delete?categoryName=category1",
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="deleteCategories();" value="delete Categories"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
 */
 blackberry.pim.category.deleteCategory = function(categoryName) { };
 
