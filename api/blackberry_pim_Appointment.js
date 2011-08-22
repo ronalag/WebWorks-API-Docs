@@ -19,7 +19,7 @@
  * <div><p>
  *       This Appointment object can be used for manipulating calendar appointments. The Appointment object is an instance object, where if a new instance is desired, it must be created using the new keyword.
  *     </p></div>
- * @toc {PIM} Appointment 
+ * @toc {PIM} Appointment
  * @BB50+
  * @class The Appointment object represents an appointment in your calendar.
  * @featureID blackberry.pim.Appointment
@@ -27,7 +27,7 @@
  * @featureID blackberry.pim.Recurrence
  * @featureID blackberry.pim.Reminder
  * @featureID blackberry.find
- * @constructor Constructor for a new Appointment object. 
+ * @constructor Constructor for a new Appointment object.
  * @param {Service} [service] Optional parameter specifying which service to create this appointment for.  If not provided, the default device service is used.
  * @example
  * &lt;script type=&quot;text&sol;javascript&quot;&gt;
@@ -36,20 +36,20 @@
  *   newAppt.location = &quot;Your office&quot;;
  *   newAppt.summary = &quot;Talk about new project&quot;;
  *   newAppt.freeBusy = blackberry.pim.Appointment.FREE;
- * 
+ *
  *   &sol;&sol; Create our hour time slot
  *   var start = new Date();
  *   newAppt.start = start;
  *   var end = start.setHours(start.getHours() + 1);
  *   newAppt.end = end;
- * 
+ *
  *   &sol;&sol; Create Attendee
  *   var attendees = [];
  *   var onlyAttendee = new blackberry.pim.Attendee();
  *   onlyAttendee.address = &quot;john@foo.com&quot;;
  *   onlyAttendee.type = blackberry.pim.Attendee.INVITED;
  *   attendees.push(onlyAttendee);
- * 
+ *
  *   newAppt.attendees = attendees;
  *   newAppt.save();
  * &lt;&sol;script&gt;
@@ -57,7 +57,7 @@
 blackberry.pim.Appointment = function(service) { };
 
 /**
-* Marks time as free in calendar 
+* Marks time as free in calendar
 * @type Number
 * @constant
 * @BB50+
@@ -65,7 +65,7 @@ blackberry.pim.Appointment = function(service) { };
 blackberry.pim.Appointment.FREE = 0;
 
 /**
-* Mark time as tentative in calendar 
+* Mark time as tentative in calendar
 * @type Number
 * @constant
 * @BB50+
@@ -73,7 +73,7 @@ blackberry.pim.Appointment.FREE = 0;
 blackberry.pim.Appointment.TENTATIVE = 1;
 
 /**
-* Mark time as busy in calendar 
+* Mark time as busy in calendar
 * @type Number
 * @constant
 * @BB50+
@@ -81,7 +81,7 @@ blackberry.pim.Appointment.TENTATIVE = 1;
 blackberry.pim.Appointment.BUSY = 2;
 
 /**
-* Mark time as out of office in calendar 
+* Mark time as out of office in calendar
 * @type Number
 * @constant
 * @BB50+
@@ -90,7 +90,7 @@ blackberry.pim.Appointment.OUT_OF_OFFICE = 3;
 
 /**
  * @name blackberry.pim.Appointment.find^2
- * @description Looks up the appointments that match the regular expression provided. 
+ * @description Looks up the appointments that match the regular expression provided.
  * @param {FilterExpression} [filter] optional parameter that defines the search criteria for the find.  If no value is provided, the method will return all the appointments on the device.
  * @param {String} [orderBy] optional &apos;orderBy&apos; parameter specifying the field which the results will be sorted by. If &apos;isAscending&apos; is not supplied or &apos;isAscending&apos; is true, the sort results will be in an ascending order. If &apos;isAscending&apos; is false, the sort results will be in a descending order.
  * @param {Number} [maxReturn] optional integer parameter specifying the maximum number of results to return from the find.  If not supplied or set to -1, it will return all results found.
@@ -102,7 +102,7 @@ blackberry.pim.Appointment.OUT_OF_OFFICE = 3;
  */
 /**
  * @name blackberry.pim.Appointment.find
- * @description Looks up the appointments that match the regular expression provided. 
+ * @description Looks up the appointments that match the regular expression provided.
  * @param {String} [filter] optional FilterExpression that defines the search criteria for the find, specified in JSON.  If no value is provided, the method will return all the appointments on the device.
  * @param {String} [orderBy] optional &apos;orderBy&apos; parameter specifying the field which the results will be sorted by. If &apos;isAscending&apos; is not supplied or &apos;isAscending&apos; is true, the sort results will be in an ascending order. If &apos;isAscending&apos; is false, the sort results will be in a descending order.
  * @param {Number} [maxReturn] optional integer parameter specifying the maximum number of results to return from the find.  If not supplied or set to -1, it will return all results found.
@@ -122,6 +122,37 @@ blackberry.pim.Appointment.OUT_OF_OFFICE = 3;
  * @BB50+
  * @uri
  * @function
+ * @example
+ * &lt;script type="text/javascript" src="jquery.min.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript"&gt;
+ * $.support.cors = true; // this is needed in BB5.0 for jQuery to support cross-domain request
+ *
+ * function findAppointment() {
+ *   var filter = new blackberry.find.FilterExpression("summary", "==", "Meeting");
+ *
+ *   $.ajax({
+ *      url : "http://webworks/blackberry/pim/Appointment/find",
+ *      data : { "filter" : JSON.stringify(filter), "orderBy" : "summary", "maxReturn" : 5 },
+ *      type : "POST",
+ *      success : function(response) {
+ *         var result = JSON.parse(response, function(key, value) {
+ *            if (value) {
+ *               if (key == "end" || key == "start") {
+ *                  return new Date(value);
+ *               }
+ *            }
+ *
+ *            return value;
+ *         });
+ *         var found = result.data["items"];
+ *         alert("Found " + found.length + " appointments!");
+ *      },
+ *      error : function(jqXHR, textStatus, errorThrown) {
+ *        alert("error:" + textStatus + " errorThrown:" + errorThrown);
+ *      }
+ *   });
+ * }
+ * &lt;/script&gt;
  */
 blackberry.pim.Appointment.find = function(filter,orderBy,maxReturn,service,isAscending) { };
 
@@ -142,6 +173,45 @@ blackberry.pim.Appointment.find = function(filter,orderBy,maxReturn,service,isAs
  * @BB50+
  * @uri
  * @function
+ * @example
+ * &lt;script type="text/javascript" src="jquery.min.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript"&gt;
+ * $.support.cors = true; // this is needed in BB5.0 for jQuery to support cross-domain request
+ *
+ * function saveAppointment() {
+ *   var appt = new blackberry.pim.Appointment();
+ *   appt.summary = "Haircut";
+ *   appt.location = "123 Barber Ave.";
+ *   var start = new Date();
+ *   start.setDate(start.getDate() + 7);
+ *   start.setHours(15, 30);
+ *   appt.start = start;
+ *   var end = new Date();
+ *   end.setHours(16, 30);
+ *
+ *   $.ajax({
+ *      url : "http://webworks/blackberry/pim/Appointment/save",
+ *      data : { "appointment" : JSON.stringify(appt) },
+ *      type : "POST",
+ *      success : function(response) {
+ *         var result = JSON.parse(response, function(key, value) {
+ *            if (value) {
+ *               if (key == "end" || key == "start") {
+ *                  return new Date(value);
+ *               }
+ *            }
+ *
+ *            return value;
+ *         });
+ *         var uid = result.data["uid"];
+ *         alert("Appointment {uid: " + uid + "} created!");
+ *      },
+ *      error : function(jqXHR, textStatus, errorThrown) {
+ *        alert("error:" + textStatus + " errorThrown:" + errorThrown);
+ *      }
+ *   });
+ * }
+ * &lt;/script&gt;
  */
 blackberry.pim.Appointment.save = function(appointment, service, uid) {};
 
@@ -159,99 +229,119 @@ blackberry.pim.Appointment.save = function(appointment, service, uid) {};
  * @BB50+
  * @uri
  * @function
+ * @example
+ * &lt;script type="text/javascript" src="jquery.min.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript"&gt;
+ * $.support.cors = true; // this is needed in BB5.0 for jQuery to support cross-domain request
+ *
+ * function removeAppointment(uid) {
+ *   $.ajax({
+ *      url : "http://webworks/blackberry/pim/Appointment/remove",
+ *      data : { "uid" : uid },
+ *      type : "POST",
+ *      success : function(response) {
+ *         var result = JSON.parse(response);
+ *         if (result.code >= 0) {
+ *            alert("Appointment {uid: " + uid + "} removed!");
+ *         }
+ *      },
+ *      error : function(jqXHR, textStatus, errorThrown) {
+ *        alert("error:" + textStatus + " errorThrown:" + errorThrown);
+ *      }
+ *   });
+ * }
+ * &lt;/script&gt;
  */
 blackberry.pim.Appointment.remove = function(uid, service) {};
 
 /**
-* Saves the changes made to the Appointment object. 
+* Saves the changes made to the Appointment object.
 * @returns {void}
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.save = function() { };
 
 /**
-* Removes an event from the PIM storage. 
+* Removes an event from the PIM storage.
 * @returns {void}
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.remove = function() { };
 
 /**
-* Holds the location information for this appointment, for example, a meeting room name. 
+* Holds the location information for this appointment, for example, a meeting room name.
 * @type String
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.location = { };
 
 /**
-* Contains a brief description of the appointment. 
+* Contains a brief description of the appointment.
 * @type String
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.summary = { };
 
 /**
-* Contains a more complete description than the summary field. 
+* Contains a more complete description than the summary field.
 * @type String
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.note = { };
 
 /**
-* The start date for this appointment. 
+* The start date for this appointment.
 * @type Date
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.start = { };
 
 /**
-* The end date for this appointment. 
+* The end date for this appointment.
 * @type Date
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.end = { };
 
 /**
-* This is the rule to store how this appointment should be repeated if any. 
+* This is the rule to store how this appointment should be repeated if any.
 * @type Recurrence
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.recurrence = { };
 
 /**
-* This is the rule to store how the user should be reminded about the appointment. 
+* This is the rule to store how the user should be reminded about the appointment.
 * @type Reminder
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.reminder = { };
 
 /**
-* The list of attendees that will be invited to this appointment. 
+* The list of attendees that will be invited to this appointment.
 * @type Attendee
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.attendees = { };
 
 /**
-* The free&sol;busy status for the appointment. Value can be one of the FreeBusy options. 
+* The free&sol;busy status for the appointment. Value can be one of the FreeBusy options.
 * @type Number
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.freeBusy = { };
 
 /**
-* Boolean field denoting whether the appointment is an all day event. 
+* Boolean field denoting whether the appointment is an all day event.
 * @type Boolean
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.allDay = { };
 
 /**
-* Represents the unique ID of the appointment. 
+* Represents the unique ID of the appointment.
 * @type String
 * @readOnly
 * @BB50+
 */
 blackberry.pim.Appointment.prototype.uid = { };
-
-

@@ -58,7 +58,7 @@
  *   $.ajax({
  *      url : "http://webworks/blackberry/system/event/" + method,
  *      data : args,
- *      method : "GET",
+ *      type : "GET",
  *      success : callback,
  *      async : true,
  *      error : function(jqXHR, textStatus, errorThrown) {
@@ -130,7 +130,7 @@
 blackberry.system.event = { };
 
 /**
-* Constant representing the back button. 
+* Constant representing the back button.
 * @type Number
 * @constant
 * @BB50+
@@ -138,7 +138,7 @@ blackberry.system.event = { };
 blackberry.system.event.KEY_BACK = 0;
 
 /**
-* Constant representing the menu button. 
+* Constant representing the menu button.
 * @type Number
 * @constant
 * @BB50+
@@ -146,7 +146,7 @@ blackberry.system.event.KEY_BACK = 0;
 blackberry.system.event.KEY_MENU = 1;
 
 /**
-* Constant representing the first convenience button. 
+* Constant representing the first convenience button.
 * @type Number
 * @constant
 * @BB50+
@@ -154,7 +154,7 @@ blackberry.system.event.KEY_MENU = 1;
 blackberry.system.event.KEY_CONVENIENCE_1 = 2;
 
 /**
-* Constant representing the second convenience button. 
+* Constant representing the second convenience button.
 * @type Number
 * @constant
 * @BB50+
@@ -162,7 +162,7 @@ blackberry.system.event.KEY_CONVENIENCE_1 = 2;
 blackberry.system.event.KEY_CONVENIENCE_2 = 3;
 
 /**
-* Constant representing the call button. 
+* Constant representing the call button.
 * @type Number
 * @constant
 * @BB50+
@@ -170,7 +170,7 @@ blackberry.system.event.KEY_CONVENIENCE_2 = 3;
 blackberry.system.event.KEY_STARTCALL = 4;
 
 /**
-* Constant representing the end call button. 
+* Constant representing the end call button.
 * @type Number
 * @constant
 * @BB50+
@@ -178,7 +178,7 @@ blackberry.system.event.KEY_STARTCALL = 4;
 blackberry.system.event.KEY_ENDCALL = 5;
 
 /**
-* Constant representing the volume down button. 
+* Constant representing the volume down button.
 * @type Number
 * @constant
 * @BB50+
@@ -186,7 +186,7 @@ blackberry.system.event.KEY_ENDCALL = 5;
 blackberry.system.event.KEY_VOLUMEDOWN = 6;
 
 /**
-* Constant representing the volume up button. 
+* Constant representing the volume up button.
 * @type Number
 * @constant
 * @BB50+
@@ -195,7 +195,7 @@ blackberry.system.event.KEY_VOLUMEUP = 7;
 
 /**
  * @name blackberry.system.event.onHardwareKey^2
- * @description Assigns a listener for the click of one of the hardware buttons on the device. 
+ * @description Assigns a listener for the click of one of the hardware buttons on the device.
  * @param {Number} key Hardware key to listen for.  A list of constants allowed for these keys is shown above.
  * @callback {function} onSystemEvent Function to be called when the key is clicked - this function takes no parameters and no return value is required.  If you attempt to subscribe more than one callback function to a particular key, only the newest callback will be used when the key is pressed.  To remove the callback simply call the onHardwareKey with null as the callback parameter.
  * @BB50+
@@ -221,7 +221,7 @@ blackberry.system.event.onHardwareKey = function(key,onSystemEvent) { };
 
 /**
  * @name blackberry.system.event.onCoverageChange^2
- * @description Assigns a listener for when the coverage status changes. 
+ * @description Assigns a listener for when the coverage status changes.
  * @callback {function} onSystemEvent Function to be called when coverage changes.  Only one function can be assigned to this event. To unregister the callback, call the onCoverageChange method and pass in null for the callback parameter.
  * @BB50+
  * @function
@@ -266,4 +266,3 @@ blackberry.system.event.deviceBatteryLevelChange =  function(onBatteryLevelChang
  * @PB10
  */
 blackberry.system.event.deviceBatteryStateChange = function(onBatteryStateChange){};
-
