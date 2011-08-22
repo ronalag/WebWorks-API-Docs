@@ -190,7 +190,7 @@ blackberry.message.Message.FOLDER_OTHER = 5;
 *              var postdata = "filter=" + JSON.stringify(filter) + "&" + "isAscending=true";	
 *              $.ajax({
 *                  type: "post",
-*                  url: "http://webworks/blackberry/message/Message/find",
+*                  url: "http://webworks/blackberry/message/find",
 *                  data: postdata
 *               });
 *           }
@@ -229,7 +229,7 @@ blackberry.message.Message.find = function(filter,maxReturn,service) { };
 *              var postdata = "message=" + JSON.stringify(message); 	
 *              $.ajax({
 *                  type: "post",
-*                  url: "http://webworks/blackberry/message/Message/save",
+*                  url: "http://webworks/blackberry/message/save",
 *                  data: postdata
 *               });
 *           }
@@ -260,7 +260,7 @@ blackberry.message.Message.save = function() { };
 *              var postdata = "message=" + JSON.stringify(message[0]); 	
 *              $.ajax({
 *                  type: "post",
-*                  url: "http://webworks/blackberry/message/Message/remove",
+*                  url: "http://webworks/blackberry/message/remove",
 *                  data: postdata
 *               });
 *           }
@@ -291,19 +291,19 @@ blackberry.message.Message.remove = function() { };
 * &lt;head&gt;
 *     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
 *     &lt;script type="text/javascript"&gt;	
-*          function removeMessage(){
+*          function sendMessage(){
 *              var message = blackberry.message.Message.find();    
 *              var postdata = "message=" + message; 	
 *              $.ajax({
 *                  type: "post",
-*                  url: "http://webworks/blackberry/message/Message/remove",
+*                  url: "http://webworks/blackberry/message/send",
 *                  data: postdata
 *               });
 *           }
 *      &lt;/script&gt;    
 *&lt;/head&gt;
 *&lt;body&gt;
-*    &lt;input type="button" onclick="removeMessage();" value="Remove Message"/&gt; 		 
+*    &lt;input type="button" onclick="sendMessage();" value="Send Message"/&gt; 		 
 *&lt;/body&gt;
 *&lt;/html&gt;
 */
