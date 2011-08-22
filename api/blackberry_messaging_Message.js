@@ -151,14 +151,163 @@ blackberry.message.Message.FOLDER_DELETED = 4;
 blackberry.message.Message.FOLDER_OTHER = 5;
 
 /**
-* This method looks up the messages that matches the expression provided. 
+* @name blackberry.message.Message.find^1
+* @function
+* @description This method looks up the messages that matches the expression provided. 
 * @param {blackberry.find.FilterExpression} [filter] optional parameter that defines the search criteria for the find.  If no value is provided the method will return all the Messages on the device for the service provided.
 * @param {Number} [maxReturn] optional integer parameter specifying the maximum number of results to return from the find.  If no value is specified, it will return all results found.
 * @param {blackberry.identity.Service} [service] optional parameter to define which service you wish to search for your messages. If not provided the default service for messages will be used.
 * @returns {Message[]}
 * @BB50+
 */
+/**
+* @name blackberry.message.Message.find
+* @function
+* @description This method looks up the messages that matches the expression provided.  
+* @param {String} [filter] Optional expression parameter that defines the search criteria for the find.  If no value is provided the method will return all the Messages on the device. (Must be stringified and put in the data of the xhr call)
+* @param {String} [orderBy] Optional &apos;orderBy&apos; parameter specifying the field which the results will be sorted by. If &apos;isAscending&apos; is not specified or &apos;isAscending&apos; is true, the sort results will be in an ascending order. If &apos;isAscending&apos; is false, the sort results will be in a descending order.(Must be put in the data of the xhr call)
+* @param {String} [maxReturn] Optional integer parameter specifying the maximum number of results to return from the find.  If not specified or set to -1, it will return all results found. (Must be put in the data of the xhr call)
+* @param {String} [isAscending] Optional &apos;isAscending&apos; parameter specifying whether the sort order is ascending or descending. If not specified or set to true, the results sorted by the field specified by &apos;orderBy&apos; will be in an ascending order. If set to false, the sort results will be in a descending order. If no &apos;orderBy&apos; value is specified, &apos;isAscending&apos; is neglected. (Must be put in the data of the xhr call)
+ * @returns {Object Literal}
+ * {
+ *   "data" : {
+ *     "filter" : "&lt;FilterExpression JSON that was passed&gt;",
+ *     "orderBy" : "&lt;field name that was passed&gt;",
+ *     "maxReturn" : &lt;maximum number of results that was passed&gt;,
+ *     "isAscending" : &lt;isAscending flag that was passed&gt;,
+ *     "messagesFound" : &lt;array of Message objects that satisfy the search criteria&gt;
+ *   }
+ * }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function findMessage(){
+*              var filter = new blackberry.find.FilterExpression("body", "==", "World");
+*              var postdata = "filter=" + JSON.stringify(filter) + "&" + "isAscending=true";	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/message/Message/find",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="findMessage();" value="Find Message"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
 blackberry.message.Message.find = function(filter,maxReturn,service) { };
+
+/**
+* @name blackberry.message.Message.save
+* @function 
+* @description This method will save the changes made to the Message object. 
+* @param {String} message The specified javascript message object that needs to be saved. (Must be stringified and put in the data of the xhr call)
+* @returns {Object Literal}
+* {
+*   "data" : {
+*     "message" : "&lt;messageJSON that was passed&gt;",
+*   }
+* }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function saveMessage(){
+*              var message = new blackberry.message.Message();  
+*                 message.toRecipients = "noone@blackberryWidgets.com"; 
+*                 message.subject = "Hello";
+*                 message.body = "World";   
+*              var postdata = "message=" + JSON.stringify(message); 	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/message/Message/save",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="saveMessage();" value="Save Message"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*
+*/
+blackberry.message.Message.save = function() { };
+
+/**
+* @name blackberry.message.Message.remove
+* @function 
+* @description This method will remove a Message from the PIM storage.
+* @param {String} message The specified javascript message object that needs to be removed. (Must be stringified and put in the data of the xhr call)
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function removeMessage(){
+*              var message = blackberry.message.Message.find();    
+*              var postdata = "message=" + JSON.stringify(message[0]); 	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/message/Message/remove",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="removeMessage();" value="Remove Message"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
+blackberry.message.Message.remove = function() { };
+
+/**
+* @name blackberry.message.Message.send
+* @function 
+* @description This method will send the message to its recipients.
+* @param {String} message The specified javascript message object that needs to be sent. (Must be stringified and put in the data of the xhr call)
+* @returns {Object Literal}
+* {
+*   "data" : {
+*     "message" : "&lt;message that was passed&gt;",
+*   }
+* }
+* @BB50+
+* @uri
+* @example 
+* &lt;html&gt;
+* &lt;head&gt;
+*     &lt;script type="text/javascript" src="js/jquery-1.4.2.js" &gt;&lt;/script&gt; 
+*     &lt;script type="text/javascript"&gt;	
+*          function removeMessage(){
+*              var message = blackberry.message.Message.find();    
+*              var postdata = "message=" + message; 	
+*              $.ajax({
+*                  type: "post",
+*                  url: "http://webworks/blackberry/message/Message/remove",
+*                  data: postdata
+*               });
+*           }
+*      &lt;/script&gt;    
+*&lt;/head&gt;
+*&lt;body&gt;
+*    &lt;input type="button" onclick="removeMessage();" value="Remove Message"/&gt; 		 
+*&lt;/body&gt;
+*&lt;/html&gt;
+*/
+blackberry.message.Message.send = function() { };
 
 /**
 * This method will save the changes made to the message object. 
