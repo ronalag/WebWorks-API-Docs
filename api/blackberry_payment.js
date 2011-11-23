@@ -124,6 +124,179 @@ blackberry.payment = {
      */
     purchase : function (args, callbackOnSuccess, callbackOnFailure) {
     },
+	/**
+	 * @function
+	 * @description Retrieves the price for a specified digital good.
+	 * @param {Object} args Contains information about the digital good to query.
+     * @callback {String} args.digitalGoodSKU SKU of the digital good to query.
+	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
+	 * @callback {String} callbackOnSuccess.data A string representing a price set object literal is passed as a parameter in the form below:
+     * <pre>[{
+     * "price": "$0.99",
+     * "subscriptionInitialPeriod": "7 days",
+     * "subscriptionInitialPrice": "$4.99",
+     * "subscriptionPeriodName": "Monthly",
+     * "subscriptionRenewalPrice": "$9.99"
+     * }]</pre>.
+     * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+	 * @PB10
+     * @BB50+
+	 * @example
+     * &lt;script type="text/javascript"&gt;
+     *   function getPrice() {
+     *     try{
+     *       blackberry.payment.getPrice({"digitalGoodSKU":"someSKU"}, success, failure);
+     *    }catch (e){
+     *      alert ("Error" + e);
+     *    }
+     *  }
+     *
+     *  function success(priceSet) {
+     *    var digitalGood = JSON.parse(priceSet);
+     *    var price = digitalGood.price;
+	 *    var subscriptionInitialPrice = digitalGood.subscriptionInitialPrice;
+	 *    var subscriptionInitialPeriod = digitalGood.subscriptionInitialPeriod;
+	 *    var subscriptionRenewalPrice = digitalGood.subscriptionRenewalPrice;
+	 *
+	 *    var output = "Price: " + price 
+	 *	      + "\nSubscription Initial Price: " + subscriptionInitialPrice
+	 *	      + "\nSubscription Initial Period: " + subscriptionInitialPeriod 
+	 *	      + "\nSubscription Renewal Price: " + subscriptionRenewalPrice;
+	 *				
+     *    alert(output);
+     *  }
+     *
+     *  function failure(errorText, errorId) {
+     *    alert("Error occured: " + errorText + ", " + errorId);
+     *  }
+     * &lt;/script&gt;
+	 */
+	 getPrice : function( args, callbackOnSuccess, callbackOnFailure ) {
+	 },
+	/**
+	 * @function
+	 * @description Retrieves the details for a specified digital good.
+	 * @param {String} sku of the digital good to query.
+	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
+	 * @callback {String} callbackOnSuccess.data A string representing a digital good object literal is passed as a parameter in the form below:
+     * <pre>[{
+     * "digitalGoodID" : "someID",
+	 * "digitalGoodSKU" : "someSKU",
+	 * "date" : "
+     * }]</pre>.
+     * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+	 * @PB10
+     * @BB50+
+	 * @example
+     * &lt;script type="text/javascript"&gt;
+     *   function getPrice() {
+     *     try{
+     *       blackberry.payment.getPrice({"digitalGoodSKU":"someSKU"}, success, failure);
+     *    }catch (e){
+     *      alert ("Error" + e);
+     *    }
+     *  }
+     *
+     *  function success(digitalGood) {
+     *    var dg = JSON.parse(digitalGood);
+     *    var price = dg.price;
+	 *    var subscriptionInitialPrice = dg.subscriptionInitialPrice;
+	 *    var subscriptionInitialPeriod = dg.subscriptionInitialPeriod;
+	 *    var subscriptionRenewalPrice = dg.subscriptionRenewalPrice;
+	 *
+	 *    var output = "Price: " + price 
+	 *	      + "\nSubscription Initial Price: " + subscriptionInitialPrice
+	 *	      + "\nSubscription Initial Period: " + subscriptionInitialPeriod 
+	 *	      + "\nSubscription Renewal Price: " + subscriptionRenewalPrice;
+	 *				
+     *    alert(output);
+     *  }
+     *
+     *  function failure(errorText, errorId) {
+     *    alert("Error occured: " + errorText + ", " + errorId);
+     *  }
+     * &lt;/script&gt;
+	 */
+	 get : function( sku, callbackOnSuccess, callbackOnFailure ) {
+	 },
+	
+	
+	/**
+	 * @function
+	 * @description Checks whether the Payment daemon is installed. This is an asynchronous call that returns results to the provided <b>PaymentEngineListener</b>
+	 * @callback {function} callbackOnSuccess Function to be called when the payment is successful.
+     * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+	 * @PB10
+     * @BB50+
+	 */
+	 isPaymentServicesAvailable : function( callbackOnSuccess, callbackOnFailure ) {
+	 },
+	 /**
+     * @function
+     * @description Retrieves the previous successful purchases made by the user from within the calling application.
+     * @param {String} [sku] the parent SKU of the digital goods requested
+     * @callback {function} callbackOnSuccess Function to be invoked on successful call.
+     * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link DigitalGood} items is passed as a parameter in the form below:
+     * <pre>[{
+     * "sku": "SKU_1",
+     * "vendor": "Vendor_1",
+     * "name": "DG_1",
+     * "shortDescription": "DG_1 short desc.",
+     * "longDescription": "This is the long description for DG_1",
+     * "price": "$1.00",
+	 * "subscriptionInitialPrice": "$4.99",
+	 * "subscriptionRenewalPrice": "$1.99",
+	 * "subscriptionPeriod": "30 days",
+	 * "subscriptionInitialPeriod": "3 days"
+     * },
+     * {
+     * "sku": "SKU_2",
+     * "vendor": "Vendor_2",
+     * "name": "DG_2",
+     * "shortDescription": "DG_2 short desc.",
+     * "longDescription": "This is the long description for DG_2",
+     * "price": "$2.00",
+	 * "subscriptionInitialPrice": "$4.99",
+	 * "subscriptionRenewalPrice": "$1.99",
+	 * "subscriptionPeriod": "30 days",
+	 * "subscriptionInitialPeriod": "3 days"
+     * }]</pre>
+     * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * @since version 1.8.0
+     * @PB10
+	 * @BB50+
+     */
+    getGoodsForSku : function (sku, callbackOnSuccess, callbackOnFailure) {
+    },
     /**
      * @type Boolean
      * @description Defines the development mode used in the application. If development mode is set to true, the application does not contact the Payment Service server for any transactions. For purchases, a simulated purchase screen is displayed, allowing the user to choose the result of the purchase. For retrieving existing purchases, only simulated successful purchases are returned. This mode is useful for testing how your application handles the possible results without requiring network connections or currency. THIS MODE SHOULD NOT BE USED IN PRODUCTION CODE. If development mode is set to false, purchases and retrievals of existing purchases proceed normally, contacting the Payment Service server as necessary. This is the default development mode, and applications in production should not modify it.
@@ -132,7 +305,6 @@ blackberry.payment = {
      * @BB50+
      */
     developmentMode: false;
-
 };
 
 /**
@@ -191,3 +363,92 @@ Purchase.prototype.date = null;
  * @BB50+
  */
 Purchase.prototype.licenseKey = null;
+
+/**
+ * @namespace This object encapsulates the attributes of a digital good.
+ * <p>
+ * It may be aquired by calling to one of the {@link blackberry.payment.digitalgoods} methods.
+ * @toc {Payment} DigitalGood
+ * @featureID blackberry.payment.digitalgoods
+ */
+DigitalGood = { };
+
+/**
+ * @type String
+ * @description The sku of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.sku = null;
+
+/**
+ * @type String
+ * @description The vendor of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.vendor = null;
+
+/**
+ * @type String
+ * @description The name of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.name = null;
+
+/**
+ * @type String
+ * @description The short description of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.shortDescription = null;
+
+/**
+ * @type String
+ * @description The long description of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.longDescription = null;
+
+/**
+ * @type String
+ * @description The price of the digital good.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.price = null;
+
+/**
+ * @type String
+ * @description The initial price of the subscription for the digital good, or null if this digital good is not a subscription item.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.subscriptionInitialPrice = null;
+
+/**
+ * @type String
+ * @description The renewal price of the subscription for the digital good, or null if this digital good is not a subscription item.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.subscriptionRenewalPrice = null;
+
+/**
+ * @type String
+ * @description The lenght of the subscription for the digital good, or null if this digital good is not a subscription item.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.subscriptionPeriod = null;
+
+/**
+ * @type String
+ * @description The intial subscription period for the digital good, or null if this digital good is not a subscription item.
+ * @PB10
+ * @BB50+
+ */
+DigitalGood.prototype.subscriptionInitialPeriod = null;
