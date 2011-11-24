@@ -104,9 +104,9 @@ blackberry.payment = {
      *       "purchaseAppName":"WebWorks APP",
      *       "purchaseAppIcon":null},
      *       success,failure);
-     *    }catch (e){
-     *      alert ("Error" + e);
-     *    }
+     *     }catch (e){
+     *       alert ("Error" + e);
+     *     }
      *  }
      *
      *  function success(purchase) {
@@ -126,18 +126,22 @@ blackberry.payment = {
     },
 	/**
 	 * @function
-	 * @description Retrieves the price for a specified digital good.
+	 * @description Initiates a request for the price of a digital good. The request can be initiated by using either the ID or the SKU of the digital good to be purchased, but it is not necessary to provide both. 
 	 * @param {Object} args Contains information about the digital good to query.
      * @callback {String} args.digitalGoodSKU SKU of the digital good to query.
+	 * @callback {String} args.digitalGoodID ID of the digital good to query.
 	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
-	 * @callback {String} callbackOnSuccess.data A string representing a price set object literal is passed as a parameter in the form below:
-     * <pre>[{
-     * "price": "$0.99",
-     * "subscriptionInitialPeriod": "7 days",
-     * "subscriptionInitialPrice": "$4.99",
-     * "subscriptionPeriodName": "Monthly",
-     * "subscriptionRenewalPrice": "$9.99"
-     * }]</pre>.
+	 * @callback {String} callbackOnSuccess.data A string representing a price set object literal containing the localized formated price of the good or a set of items for a subscription is passed as a parameter in the form below: 
+	 * <pre>[{
+	 * "getFailureReason":"-224718155",
+	 * "price":"$1.05",
+	 * "returnCode":"-224718155",
+	 * "statusMessage":"",
+	 * "subscriptionInitialPeriod":"null",
+	 * "subscriptionInitialPrice":"$1.05",
+	 * "subscriptionPeriodName":"null",
+	 * "subscriptionRenewalPrice":"null"
+	 * }]</pre>.
      * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
      * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
@@ -155,17 +159,17 @@ blackberry.payment = {
      *   function getPrice() {
      *     try{
      *       blackberry.payment.getPrice({"digitalGoodSKU":"someSKU"}, success, failure);
-     *    }catch (e){
-     *      alert ("Error" + e);
-     *    }
+     *     }catch (e){
+     *       alert ("Error" + e);
+     *     }
      *  }
      *
      *  function success(priceSet) {
-     *    var digitalGood = JSON.parse(priceSet);
-     *    var price = digitalGood.price;
-	 *    var subscriptionInitialPrice = digitalGood.subscriptionInitialPrice;
-	 *    var subscriptionInitialPeriod = digitalGood.subscriptionInitialPeriod;
-	 *    var subscriptionRenewalPrice = digitalGood.subscriptionRenewalPrice;
+     *    var digitalGoodPS = JSON.parse(priceSet);
+     *    var price = digitalGoodPS.price;
+	 *    var subscriptionInitialPrice = digitalGoodPS.subscriptionInitialPrice;
+	 *    var subscriptionInitialPeriod = digitalGoodPS.subscriptionInitialPeriod;
+	 *    var subscriptionRenewalPrice = digitalGoodPS.subscriptionRenewalPrice;
 	 *
 	 *    var output = "Price: " + price 
 	 *	      + "\nSubscription Initial Price: " + subscriptionInitialPrice
@@ -180,19 +184,22 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	 getPrice : function( args, callbackOnSuccess, callbackOnFailure ) {
-	 },
+	getPrice : function( args, callbackOnSuccess, callbackOnFailure ) {
+	},
 	/**
 	 * @function
-	 * @description Retrieves the details for a specified digital good.
+	 * @description Returns a Purchase object if the logged in BBID user has rights for this SKU at the time of calling this method. The result will be based on the default business rules defined by the PS Server / AppWorld. For example: In the case of a subscription a "Canceled" subscription will return true till the next renewal date. All "Refunded" SKUs will return false immediately. This call is used to get the transactionID for use with the {@link cancel} method to cancel a subscription.
 	 * @param {String} sku of the digital good to query.
 	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
 	 * @callback {String} callbackOnSuccess.data A string representing a digital good object literal is passed as a parameter in the form below:
      * <pre>[{
-     * "digitalGoodID" : "someID",
-	 * "digitalGoodSKU" : "someSKU",
-	 * "date" : "
-     * }]</pre>.
+	 * "digitalGoodID":"123456",
+	 * "digitalGoodSKU":"Some_SKU",
+	 * "date":"1322066643848",
+	 * "licenseKey":"Single License Key",
+	 * "metaData":"Some metadata",
+	 * "transactionID":"10101"
+	 * }]</pre>.
      * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
      * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
@@ -207,25 +214,29 @@ blackberry.payment = {
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
-     *   function getPrice() {
+     *   function get() {
      *     try{
-     *       blackberry.payment.getPrice({"digitalGoodSKU":"someSKU"}, success, failure);
-     *    }catch (e){
-     *      alert ("Error" + e);
-     *    }
+     *       blackberry.payment.getPrice("Some_SKU", success, failure);
+     *     }catch (e){
+     *       alert ("Error" + e);
+     *     }
      *  }
      *
-     *  function success(digitalGood) {
-     *    var dg = JSON.parse(digitalGood);
-     *    var price = dg.price;
-	 *    var subscriptionInitialPrice = dg.subscriptionInitialPrice;
-	 *    var subscriptionInitialPeriod = dg.subscriptionInitialPeriod;
-	 *    var subscriptionRenewalPrice = dg.subscriptionRenewalPrice;
+     *  function success(purchase) {
+     *    var o = JSON.parse(purchase);
+     *    var id = o.digitalGoodID;
+	 *    var sku = o.digitalGoodSKU;
+	 *    var date = o.date;
+	 *    var license = o.licenseKey;
+	 *    var metadata = o.metadata;
+	 *    var transactionID = o.transactionID;
 	 *
-	 *    var output = "Price: " + price 
-	 *	      + "\nSubscription Initial Price: " + subscriptionInitialPrice
-	 *	      + "\nSubscription Initial Period: " + subscriptionInitialPeriod 
-	 *	      + "\nSubscription Renewal Price: " + subscriptionRenewalPrice;
+	 *    var output = "ID: " + id 
+	 *	      + "\nSKU: " + sku
+	 *	      + "\nDate: " + date
+	 *	      + "\nLicense: " + license;
+	 *	      + "\Metadata: " + metadata;
+	 *	      + "\nTransaction ID: " + transactionID;
 	 *				
      *    alert(output);
      *  }
@@ -235,14 +246,13 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	 get : function( sku, callbackOnSuccess, callbackOnFailure ) {
-	 },
-	
-	
+	get : function( sku, callbackOnSuccess, callbackOnFailure ) {
+	},
 	/**
 	 * @function
-	 * @description Checks whether the Payment daemon is installed. This is an asynchronous call that returns results to the provided <b>PaymentEngineListener</b>
-	 * @callback {function} callbackOnSuccess Function to be called when the payment is successful.
+	 * @description Initiates a request to cancel the digital good given it's TransactionID.
+	 * @param {String} [transactionID] the transaction id of the digital good you would like to cancel
+	 * @callback {function} callbackOnSuccess Function to be called when the transaction is cancelled
      * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
      * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
@@ -255,12 +265,32 @@ blackberry.payment = {
      * </ul>
 	 * @PB10
      * @BB50+
+	 * @example
+     * &lt;script type="text/javascript"&gt;
+     *   function cancel() {
+     *     try{
+     *       blackberry.payment.cancel("transaction_id", success, failure);
+     *     }catch (e){
+     *       alert ("Error" + e);
+     *     }
+     *  }
+     *
+     *  function success(purchase) {
+	 *    var o = JSON.parse(purchase);
+	 *    var transactionID = o.transactionID;
+     *    alert("Trnasaction " + transactionID + " has been cancelled");
+     *  }
+     *
+     *  function failure(errorText, errorId) {
+     *    alert("Error occured: " + errorText + ", " + errorId);
+     *  }
+     * &lt;/script&gt;
 	 */
-	 isPaymentServicesAvailable : function( callbackOnSuccess, callbackOnFailure ) {
-	 },
+	cancel : function ( transactionID, callbackOnSuccess, callbackOnFailure ) {
+	},
 	 /**
      * @function
-     * @description Retrieves the previous successful purchases made by the user from within the calling application.
+     * @description Retrieves a digital goods listing for the specified parent SKU.
      * @param {String} [sku] the parent SKU of the digital goods requested
      * @callback {function} callbackOnSuccess Function to be invoked on successful call.
      * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link DigitalGood} items is passed as a parameter in the form below:
@@ -291,20 +321,90 @@ blackberry.payment = {
      * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
      * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
 	 * @since version 1.8.0
      * @PB10
 	 * @BB50+
      */
     getGoodsForSku : function (sku, callbackOnSuccess, callbackOnFailure) {
     },
-    /**
-     * @type Boolean
-     * @description Defines the development mode used in the application. If development mode is set to true, the application does not contact the Payment Service server for any transactions. For purchases, a simulated purchase screen is displayed, allowing the user to choose the result of the purchase. For retrieving existing purchases, only simulated successful purchases are returned. This mode is useful for testing how your application handles the possible results without requiring network connections or currency. THIS MODE SHOULD NOT BE USED IN PRODUCTION CODE. If development mode is set to false, purchases and retrievals of existing purchases proceed normally, contacting the Payment Service server as necessary. This is the default development mode, and applications in production should not modify it.
-     * @default false
+	/**
+     * @function 
+     * @description Invokes callbackOnSuccess if the logged in BBID user has rights for this SKU at the time of calling this method.
+	 * @param {String} [sku] the SKU of the digital goods requested 
+	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
+	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
      * @PB10
-     * @BB50+
-     */
-    developmentMode: false;
+	 * @BB50+
+	 */
+	checkExisting : function (sku, callbackOnSuccess, callbackOnFailure) {
+	},
+	/**
+	 * @function
+	 * @description Starts the process of upgrading App World to the current version by opening the browser on the device to the AppWorld upgrade page.
+	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
+	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+     * @PB10
+	 * @BB50+
+	 */
+	upDateAppWorld : function( callbackOnSuccess, callbackOnFailure) { 
+	},
+	/**
+	 * @function
+	 * @description Invokes the callbackOnSuccess if the App World client is installed and at the correct verison.  
+	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
+	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+	 * @since version 1.5.0
+     * @PB10
+	 * @BB50+
+	 */
+	isAppWorldInstalledAndAtCorrectVersion : function( callbackOnSuccess, callbackOnFailure) {
+	},
+	/**
+	 * @function
+	 * @description Sets the debug flag to true to show debug information via alert dialogs during development.
+	 */
+	setDebugTrue : function() {
+	},
+	/**
+	 * @function
+	 * @description Sets the debug flag to flase to hide debug information from being shown.
+	 */
+	setDebugFalse : function() {
+	},
 };
 
 /**
