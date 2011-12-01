@@ -63,6 +63,7 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
      * <b>Note:</b> The actual values may be different when {@link blackberry.payment.developmentMode} equals true.
+	 * @since Version 1.0
      * @PB10
 	 * @BB50+
      */
@@ -90,6 +91,7 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
+	 * @since Version 1.0
      * @PB10
      * @BB50+
      * @example
@@ -126,7 +128,7 @@ blackberry.payment = {
     },
 	/**
 	 * @function
-	 * @description Initiates a request for the price of a digital good. The request can be initiated by using either the ID or the SKU of the digital good to be purchased, but it is not necessary to provide both. 
+	 * @description Initiates a request for the price of a digital good. The request can be initiated by using either the digital good ID or the digital good SKU to be purchased, but it is not necessary to provide both. 
 	 * @param {Object} args Contains information about the digital good to query.
      * @callback {String} args.digitalGoodSKU SKU of the digital good to query.
 	 * @callback {String} args.digitalGoodID ID of the digital good to query.
@@ -152,7 +154,7 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
-	 * @PB10
+	 * @since Version 1.5.0
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
@@ -210,7 +212,7 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
-	 * @PB10
+	 * @since Version 1.5.0
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
@@ -246,12 +248,12 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	get : function( sku, callbackOnSuccess, callbackOnFailure ) {
+	get : function( digitalGoodSKU, callbackOnSuccess, callbackOnFailure ) {
 	},
 	/**
 	 * @function
-	 * @description Initiates a request to cancel the digital good given it's TransactionID.
-	 * @param {String} [transactionID] the transaction id of the digital good you would like to cancel
+	 * @description Initiates a request to cancel the digital good subscription given it's TransactionID.
+	 * @param {String} transactionID the transaction id of the digital good you would like to cancel
 	 * @callback {function} callbackOnSuccess Function to be called when the transaction is cancelled
      * @callback {function} [callbackOnFailure] Function to be called when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
@@ -263,7 +265,7 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
-	 * @PB10
+	 * @since Version 1.5.0
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
@@ -328,7 +330,6 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
 	 * @since version 1.8.0
-     * @PB10
 	 * @BB50+
      */
     getDigitalGoods : function (callbackOnSuccess, callbackOnFailure) {
@@ -365,15 +366,14 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
 	 * @since version 1.8.0
-     * @PB10
 	 * @BB50+
      */
     getPurchaseHistory : function (callbackOnSuccess, callbackOnFailure) {
     },
 	/**
      * @function 
-     * @description Invokes callbackOnSuccess if the logged in BBID user has rights for this SKU at the time of calling this method.
-	 * @param {String} [sku] the SKU of the digital goods requested 
+     * @description Invokes callbackOnSuccess if the logged in BBID user has rights for this digital good SKU at the time of calling this method.
+	 * @param {String} sku the SKU of the digital goods requested 
 	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
 	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
@@ -385,10 +385,10 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
-     * @PB10
+     * @since Version 1.5.0
 	 * @BB50+
 	 */
-	checkExisting : function (sku, callbackOnSuccess, callbackOnFailure) {
+	checkExisting : function (digitalGoodSKU, callbackOnSuccess, callbackOnFailure) {
 	},
 	/**
 	 * @function
@@ -404,10 +404,10 @@ blackberry.payment = {
      * <li> Digital Good not Found = 4</li>
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
-     * @PB10
+	 * @since Version 1.5.0
 	 * @BB50+
 	 */
-	upDateAppWorld : function( callbackOnSuccess, callbackOnFailure) { 
+	updateAppWorld : function( callbackOnSuccess, callbackOnFailure) { 
 	},
 	/**
 	 * @function
@@ -424,7 +424,6 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
 	 * @since version 1.5.0
-     * @PB10
 	 * @BB50+
 	 */
 	isAppWorldInstalledAndAtCorrectVersion : function( callbackOnSuccess, callbackOnFailure) {
@@ -512,7 +511,6 @@ DigitalGood = { };
 /**
  * @type String
  * @description The sku of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.sku = null;
@@ -520,7 +518,6 @@ DigitalGood.prototype.sku = null;
 /**
  * @type String
  * @description The vendor of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.vendor = null;
@@ -528,7 +525,6 @@ DigitalGood.prototype.vendor = null;
 /**
  * @type String
  * @description The name of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.name = null;
@@ -536,7 +532,6 @@ DigitalGood.prototype.name = null;
 /**
  * @type String
  * @description The short description of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.shortDescription = null;
@@ -544,7 +539,6 @@ DigitalGood.prototype.shortDescription = null;
 /**
  * @type String
  * @description The long description of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.longDescription = null;
@@ -552,7 +546,6 @@ DigitalGood.prototype.longDescription = null;
 /**
  * @type String
  * @description The price of the digital good.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.price = null;
@@ -560,7 +553,6 @@ DigitalGood.prototype.price = null;
 /**
  * @type String
  * @description The initial price of the subscription for the digital good, or null if this digital good is not a subscription item.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.subscriptionInitialPrice = null;
@@ -568,7 +560,6 @@ DigitalGood.prototype.subscriptionInitialPrice = null;
 /**
  * @type String
  * @description The renewal price of the subscription for the digital good, or null if this digital good is not a subscription item.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.subscriptionRenewalPrice = null;
@@ -576,7 +567,6 @@ DigitalGood.prototype.subscriptionRenewalPrice = null;
 /**
  * @type String
  * @description The lenght of the subscription for the digital good, or null if this digital good is not a subscription item.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.subscriptionPeriod = null;
@@ -584,7 +574,6 @@ DigitalGood.prototype.subscriptionPeriod = null;
 /**
  * @type String
  * @description The intial subscription period for the digital good, or null if this digital good is not a subscription item.
- * @PB10
  * @BB50+
  */
 DigitalGood.prototype.subscriptionInitialPeriod = null;
