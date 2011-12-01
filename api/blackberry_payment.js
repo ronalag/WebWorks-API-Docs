@@ -37,20 +37,20 @@ blackberry.payment = {
      * @callback {function} callbackOnSuccess Function to be invoked on successful call.
      * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link Purchase} items is passed as a parameter in the form below:
      * <pre>[{
-     * "transactionID": "00000001",
      * "digitalGoodID": "123",
-     * "date": "1234567891011",
      * "digitalGoodSKU": "SKU_1",
+     * "date": "1234567891011",
      * "licenseKey": null,
-     * "metaData": "My Metadata"
+     * "metaData": "My Metadata",
+     * "transactionID": "00000001"
      * },
      * {
-     * "transactionID": "00000002",
      * "digitalGoodID": "456",
-     * "date": "1234567891011",
      * "digitalGoodSKU": "SKU_2",
+     * "date": "1234567891011",
      * "licenseKey": null,
-     * "metaData": "My Metadata"
+     * "metaData": "My Metadata",
+     * "transactionID": "00000002"
      * }]</pre>
      * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
@@ -94,7 +94,7 @@ blackberry.payment = {
      * @BB50+
      * @example
      * &lt;script type="text/javascript"&gt;
-     *   function pay() {
+     *   function purchase() {
      *     try{
      *       blackberry.payment.purchase({
      *       "digitalGoodID":"123",
@@ -216,7 +216,7 @@ blackberry.payment = {
      * &lt;script type="text/javascript"&gt;
      *   function get() {
      *     try{
-     *       blackberry.payment.getPrice("Some_SKU", success, failure);
+     *       blackberry.payment.get("Some_SKU", success, failure);
      *     }catch (e){
      *       alert ("Error" + e);
      *     }
@@ -234,8 +234,8 @@ blackberry.payment = {
 	 *    var output = "ID: " + id 
 	 *	      + "\nSKU: " + sku
 	 *	      + "\nDate: " + date
-	 *	      + "\nLicense: " + license;
-	 *	      + "\Metadata: " + metadata;
+	 *	      + "\nLicense: " + license
+	 *	      + "\nMetadata: " + metadata
 	 *	      + "\nTransaction ID: " + transactionID;
 	 *				
      *    alert(output);
@@ -278,7 +278,7 @@ blackberry.payment = {
      *  function success(purchase) {
 	 *    var o = JSON.parse(purchase);
 	 *    var transactionID = o.transactionID;
-     *    alert("Trnasaction " + transactionID + " has been cancelled");
+     *    alert("Transaction " + transactionID + " has been cancelled");
      *  }
      *
      *  function failure(errorText, errorId) {
@@ -290,8 +290,7 @@ blackberry.payment = {
 	},
 	 /**
      * @function
-     * @description Retrieves a digital goods listing for the specified parent SKU.
-     * @param {String} [sku] the parent SKU of the digital goods requested
+     * @description Retrieves a listing of digital goods available for the calling application.
      * @callback {function} callbackOnSuccess Function to be invoked on successful call.
      * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link DigitalGood} items is passed as a parameter in the form below:
      * <pre>[{
@@ -332,7 +331,44 @@ blackberry.payment = {
      * @PB10
 	 * @BB50+
      */
-    getGoodsForSku : function (sku, callbackOnSuccess, callbackOnFailure) {
+    getDigitalGoods : function (callbackOnSuccess, callbackOnFailure) {
+    },
+	/**
+     * @function
+     * @description Retrieve the user's purchase history for the calling application as well as any digital goods.
+     * @callback {function} callbackOnSuccess Function to be invoked on successful call.
+     * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link Purchase} items is passed as a parameter in the form below:
+     * <pre>[{
+     * "digitalGoodID": "123",
+     * "digitalGoodSKU": "SKU_1",
+     * "date": "1234567891011",
+     * "licenseKey": null,
+     * "metaData": "My Metadata",
+     * "transactionID": "00000001"
+     * },
+     * {
+     * "digitalGoodID": "456",
+     * "digitalGoodSKU": "SKU_2",
+     * "date": "1234567891011",
+     * "licenseKey": null,
+     * "metaData": "My Metadata",
+     * "transactionID": "00000002"
+     * }]</pre>
+     * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
+     * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
+     * @callback {Number} callbackOnFailure.errorID Contains the reference number associated with the specific error in corresponding to the following values.
+	 * <ul>
+     * <li> User Cancelled = 1</li>
+     * <li> Payment System Busy = 2</li>
+     * <li> General Payment System Error  = 3</li>
+     * <li> Digital Good not Found = 4</li>
+     * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
+     * </ul>
+	 * @since version 1.8.0
+     * @PB10
+	 * @BB50+
+     */
+    getPurchaseHistory : function (callbackOnSuccess, callbackOnFailure) {
     },
 	/**
      * @function 
