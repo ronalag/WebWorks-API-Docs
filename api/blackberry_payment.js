@@ -190,7 +190,7 @@ blackberry.payment = {
 	},
 	/**
 	 * @function
-	 * @description Returns a Purchase object if the logged in BBID user has rights for this SKU at the time of calling this method. The result will be based on the default business rules defined by the PS Server / AppWorld. For example: In the case of a subscription a "Canceled" subscription will return true till the next renewal date. All "Refunded" SKUs will return false immediately. This call is used to get the transactionID for use with the {@link cancel} method to cancel a subscription.
+	 * @description Returns a {@link Purchase} object if the logged in BBID user has rights for this digital good SKU at the time of calling this method. The result will be based on the default business rules defined by the PS Server / AppWorld. For example: In the case of a subscription a "Canceled" subscription will return true till the next renewal date. All "Refunded" SKUs will return false immediately. This call is used to get the transactionID for use with the {@link cancel} method to cancel a subscription.
 	 * @param {String} sku of the digital good to query.
 	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
 	 * @callback {String} callbackOnSuccess.data A string representing a digital good object literal is passed as a parameter in the form below:
@@ -218,7 +218,7 @@ blackberry.payment = {
      * &lt;script type="text/javascript"&gt;
      *   function get() {
      *     try{
-     *       blackberry.payment.get("Some_SKU", success, failure);
+     *       blackberry.payment.getPurchaseDetails("Some_SKU", success, failure);
      *     }catch (e){
      *       alert ("Error" + e);
      *     }
@@ -248,7 +248,7 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	getPurchase : function( digitalGoodSKU, callbackOnSuccess, callbackOnFailure ) {
+	getPurchaseDetails : function( digitalGoodSKU, callbackOnSuccess, callbackOnFailure ) {
 	},
 	/**
 	 * @function
@@ -269,9 +269,9 @@ blackberry.payment = {
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
-     *   function cancel() {
+     *   function cancelSubscription() {
      *     try{
-     *       blackberry.payment.cancel("transaction_id", success, failure);
+     *       blackberry.payment.cancelSubscription("transaction_id", success, failure);
      *     }catch (e){
      *       alert ("Error" + e);
      *     }
@@ -288,7 +288,7 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	cancel : function ( transactionID, callbackOnSuccess, callbackOnFailure ) {
+	cancelSubscription : function ( transactionID, callbackOnSuccess, callbackOnFailure ) {
 	},
 	 /**
      * @function
@@ -336,7 +336,7 @@ blackberry.payment = {
     },
 	/**
      * @function
-     * @description Retrieve the user's purchase history for the calling application as well as any digital goods.
+     * @description Retrieve the user's purchase history for the calling application as well as any digital goods associated to the application.
      * @callback {function} callbackOnSuccess Function to be invoked on successful call.
      * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link Purchase} items is passed as a parameter in the form below:
      * <pre>[{
