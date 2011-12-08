@@ -248,7 +248,7 @@ blackberry.payment = {
      *  }
      * &lt;/script&gt;
 	 */
-	get : function( digitalGoodSKU, callbackOnSuccess, callbackOnFailure ) {
+	getPurchase : function( digitalGoodSKU, callbackOnSuccess, callbackOnFailure ) {
 	},
 	/**
 	 * @function
