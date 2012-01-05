@@ -64,7 +64,7 @@ blackberry.payment = {
      * </ul>
      * <b>Note:</b> The actual values may be different when {@link blackberry.payment.developmentMode} equals true.
 	 * @since Version 1.0
-     * @PB10
+     * @PB10+
 	 * @BB50+
      */
     getExistingPurchases : function (refresh, callbackOnSuccess, callbackOnFailure) {
@@ -92,7 +92,7 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
 	 * @since Version 1.0
-     * @PB10
+     * @PB10+
      * @BB50+
      * @example
      * &lt;script type="text/javascript"&gt;
@@ -155,6 +155,7 @@ blackberry.payment = {
      * <li> Illegal Application Error = 5 [BlackBerry OS 5.0+ only]</li>
      * </ul>
 	 * @since Version 1.5.0
+     * @PB10+
      * @BB50+
 	 * @example
      * &lt;script type="text/javascript"&gt;
@@ -190,7 +191,7 @@ blackberry.payment = {
 	},
 	/**
 	 * @function
-	 * @description Returns a {@link Purchase} object if the logged in BBID user has rights for this digital good SKU at the time of calling this method. The result will be based on the default business rules defined by the PS Server / AppWorld. For example: In the case of a subscription a "Canceled" subscription will return true till the next renewal date. All "Refunded" SKUs will return false immediately. This call is used to get the transactionID for use with the {@link cancel} method to cancel a subscription.
+	 * @description Returns a {@link Purchase} object if the user who is logged in with a BlackBerry ID has rights for this digital good SKU at the time of calling this method. The result is based on the default business rules defined by the Payment Service server or BlackBerry App World. For example, in the case of a subscription, a "Canceled" subscription will return true until the next renewal date. All "Refunded" SKUs will return false immediately.
 	 * @param {String} sku of the digital good to query.
 	 * @callback {function} callbackOnSuccess Function to be called when the price set is retrieved.
 	 * @callback {String} callbackOnSuccess.data A string representing a digital good object literal is passed as a parameter in the form below:
@@ -336,7 +337,7 @@ blackberry.payment = {
     },
 	/**
      * @function
-     * @description Retrieve the user's purchase history for the calling application as well as any digital goods associated to the application.
+     * @description Retrieve the user's purchase history for the calling application as well as any digital goods associated with the application.
      * @callback {function} callbackOnSuccess Function to be invoked on successful call.
      * @callback {String} callbackOnSuccess.data A string representing a literal array of {@link Purchase} items is passed as a parameter in the form below:
      * <pre>[{
@@ -372,7 +373,7 @@ blackberry.payment = {
     },
 	/**
      * @function 
-     * @description Invokes callbackOnSuccess if the logged in BBID user has rights for this digital good SKU at the time of calling this method.
+     * @description Invokes callbackOnSuccess if the user who is logged in with a BlackBerry ID has rights for this digital good SKU at the time of calling this method.
 	 * @param {String} sku the SKU of the digital goods requested 
 	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
 	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
@@ -392,7 +393,7 @@ blackberry.payment = {
 	},
 	/**
 	 * @function
-	 * @description Starts the process of upgrading App World to the current version by opening the browser on the device to the AppWorld upgrade page.
+	 * @description Starts the process of upgrading BlackBerry App World to the current version by opening the browser on the device to the BlackBerry App World upgrade page.
 	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
 	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
@@ -411,7 +412,7 @@ blackberry.payment = {
 	},
 	/**
 	 * @function
-	 * @description Invokes the callbackOnSuccess if the App World client is installed and at the correct verison.  
+	 * @description Invokes the callbackOnSuccess if the BlackBerry App World client is installed and at the correct verison.  
 	 * @callback {function} callbackOnSuccess Function to be invoked on successful call.
 	 * @callback {function} [callbackOnFailure] Function to be invoked when an error occurs.
      * @callback {String} callbackOnFailure.errorText Retrieves the message set for an error. In addition to descriptive text, error code may appear at the end of the message. 
@@ -436,7 +437,7 @@ blackberry.payment = {
 	},
 	/**
 	 * @function
-	 * @description Sets the debug flag to flase to hide debug information from being shown.
+	 * @description Sets the debug flag to false to hide debug information from being shown.
 	 */
 	setDebugFalse : function() {
 	},
@@ -454,7 +455,7 @@ Purchase = { };
 /**
  * @type String
  * @description The transaction ID for this purchase.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.transactionID = null;
@@ -462,7 +463,7 @@ Purchase.prototype.transactionID = null;
 /**
  * @type String
  * @description The ID of the purchased digital good.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.digitalGoodID = null;
@@ -470,7 +471,7 @@ Purchase.prototype.digitalGoodID = null;
 /**
  * @type String
  * @description The SKU of the purchased digital good.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.digitalGoodSKU = null;
@@ -478,7 +479,7 @@ Purchase.prototype.digitalGoodSKU = null;
 /**
  * @type String
  * @description The metadata for this purchase, or null if no metadata was included with the purchase.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.metaData = null;
@@ -486,7 +487,7 @@ Purchase.prototype.metaData = null;
 /**
  * @type String
  * @description The Epoch time represention of the date this purchase was made.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.date = null;
@@ -494,7 +495,7 @@ Purchase.prototype.date = null;
 /**
  * @type String
  * @description Represents the license key for this purchase, or null if the purchased digital good does not have a license key.
- * @PB10
+ * @PB10+
  * @BB50+
  */
 Purchase.prototype.licenseKey = null;
